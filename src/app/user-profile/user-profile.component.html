@@ -1,0 +1,84 @@
+<div id="register-container">
+  <mat-card style="width: 480px">
+    <div id="progressBar" style="height: 10px;margin: 10px;">
+      <mat-progress-bar *ngIf="loading" style="margin: 5px 0" mode="buffer"></mat-progress-bar>
+    </div>
+    <mat-card-title>Профиль пользователя</mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="userForm">
+
+        <mat-form-field>
+          <input matInput placeholder="Фамилия" formControlName="last_name" [(ngModel)]="user.last_name" required>
+          <mat-error *ngIf="userForm.controls.last_name.errors">
+            <span *ngIf="userForm.controls.last_name.errors.required">необходимо заполнить поле</span>
+          </mat-error>
+          <button mat-button *ngIf="user.last_name" matSuffix mat-icon-button aria-label="Clear" (click)="user.last_name=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Имя" formControlName="first_name" [(ngModel)]="user.first_name" required>
+          <mat-error *ngIf="userForm.controls.first_name.errors">
+            <span *ngIf="userForm.controls.first_name.errors.required">необходимо заполнить поле</span>
+          </mat-error>
+          <button mat-button *ngIf="user.first_name" matSuffix mat-icon-button aria-label="Clear" (click)="user.first_name=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Отчество" formControlName="mid_name" [(ngModel)]="user.mid_name" required>
+          <mat-error *ngIf="userForm.controls.mid_name.errors">
+            <span *ngIf="userForm.controls.mid_name.errors.required">необходимо заполнить поле</span>
+          </mat-error>
+          <button mat-button *ngIf="user.mid_name" matSuffix mat-icon-button aria-label="Clear" (click)="user.mid_name=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Город" formControlName="town" [(ngModel)]="user.town" required>
+          <mat-error *ngIf="userForm.controls.town.errors">
+            <span *ngIf="userForm.controls.town.errors.required">необходимо заполнить поле</span>
+          </mat-error>
+          <button mat-button *ngIf="user.town" matSuffix mat-icon-button aria-label="Clear" (click)="user.town=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Email" formControlName="email" [(ngModel)]="user.email" required>
+          <mat-error *ngIf="userForm.controls.email.errors">
+            <span *ngIf="userForm.controls.email.errors.required">необходимо заполнить поле</span>
+            <span *ngIf="userForm.controls.email.errors" style="margin-left: 5px;">неверный email</span>
+          </mat-error>
+          <button mat-button *ngIf="user.email" matSuffix mat-icon-button aria-label="Clear" (click)="user.email=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input type="password" matInput placeholder="Пароль" formControlName="password" [(ngModel)]="user.password" required>
+          <mat-error *ngIf="userForm.controls.password.errors">
+            <span *ngIf="userForm.controls.password.errors.minlength">
+              длина пароля должна быть не менее {{userForm.controls.password.errors.minlength.requiredLength}} символов
+            </span>
+            <span *ngIf="userForm.controls.password.errors.required">необходимо заполнить поле</span>
+          </mat-error>
+          <button mat-button *ngIf="user.password" matSuffix mat-icon-button aria-label="Clear" (click)="user.password=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+      </form>
+    </mat-card-content>
+    <mat-card-actions>
+      <div style="display: flex;justify-content: space-between">
+        <button mat-button color="warn" (click)="goToMain()">перейти на главную</button>
+        <button mat-button color="primary" (click)="save()" [disabled]="userForm.invalid">Сохранить</button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</div>
+

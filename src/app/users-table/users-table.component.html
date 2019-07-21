@@ -1,0 +1,63 @@
+<mat-card>
+  <mat-card-header style="margin-bottom: 10px;">
+    <mat-form-field style="width: 40%">
+      <input matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="dataFilter" placeholder="Поиск (имя, город, технология)">
+      <button mat-button *ngIf="dataFilter" matSuffix mat-icon-button aria-label="Clear" (click)="clearDataFilter()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <span class="spacer"></span>
+    <mat-paginator [pageSizeOptions]="[10,15,20]" showFirstLastButtons></mat-paginator>
+  </mat-card-header>
+  <mat-card-content>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="fullName">
+        <th mat-header-cell *matHeaderCellDef>Имя</th>
+        <td mat-cell *matCellDef="let user"> {{user.full_name}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="town">
+        <th mat-header-cell *matHeaderCellDef>Город</th>
+        <td mat-cell *matCellDef="let user"> {{user.town}} </td>
+      </ng-container>
+
+      <ng-container *ngIf="loginUser" matColumnDef="ratings">
+        <th mat-header-cell *matHeaderCellDef>Технологии</th>
+        <td mat-cell *matCellDef="let user">
+          <mat-list *ngIf="user.technology_names !== 'undefined'">
+            <mat-list-item class="technology" *ngFor="let technology of user.tech" (click)="openSetRatingDialog(technology, user)">
+              <div matTooltip="поставить оценку технологии" style="display: flex;align-items: center">
+                <span>{{technology.name}}</span>
+                <span><mat-icon style="color: coral;margin-left: 20px">star_rate</mat-icon></span>
+                <span style="margin-left: 3px">{{usersService.calcRating(technology)}}</span>
+              </div>
+            </mat-list-item>
+          </mat-list>
+          <button mat-button color="primary" (click)="openAddRatingDialog(user)">добавить технологию</button>
+        </td>
+      </ng-container>
+
+      <ng-container *ngIf="!loginUser" matColumnDef="ratings">
+        <th mat-header-cell *matHeaderCellDef>Технологии</th>
+        <td mat-cell *matCellDef="let user">
+          <mat-list *ngIf="user.technology_names !== 'undefined'">
+            <mat-list-item *ngFor="let technology of user.tech">
+              <div style="display: flex;align-items: center">
+                <span>{{technology.name}}</span>
+                <span><mat-icon style="color: coral;margin-left: 20px">star_rate</mat-icon></span>
+                <span style="margin-left: 3px">{{usersService.calcRating(technology)}}</span>
+              </div>
+            </mat-list-item>
+          </mat-list>
+          <span *ngIf="user.technology_names === 'undefined'"> нет технологий с оценками</span>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+  </mat-card-content>
+</mat-card>
+

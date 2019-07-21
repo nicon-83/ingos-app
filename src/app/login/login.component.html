@@ -1,0 +1,46 @@
+<div id="login-container">
+  <mat-card style="width: 480px">
+    <div id="progressBar" style="height: 10px;margin: 10px;">
+      <mat-progress-bar *ngIf="loading" style="margin: 5px 0" mode="buffer"></mat-progress-bar>
+    </div>
+    <mat-card-title>Вход на сайт</mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="userForm">
+
+        <mat-form-field>
+          <input matInput placeholder="Email" formControlName="email" [(ngModel)]="user.email" required>
+          <mat-error *ngIf="userForm.controls.email.errors">
+            <span *ngIf="userForm.controls.email.errors.required">необходимо заполнить поле</span>
+            <span *ngIf="userForm.controls.email.errors" style="margin-left: 5px;">неверный email</span>
+          </mat-error>
+          <button mat-button *ngIf="user.email" matSuffix mat-icon-button aria-label="Clear" (click)="user.email=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input type="password" matInput placeholder="Пароль" formControlName="password" [(ngModel)]="user.password" required>
+          <mat-error *ngIf="userForm.controls.password.errors">
+            <span *ngIf="userForm.controls.password.errors.required">необходимо заполнить поле</span>
+          </mat-error>
+          <button mat-button *ngIf="user.password" matSuffix mat-icon-button aria-label="Clear" (click)="user.password=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <div style="display: flex;justify-content: space-between">
+        <button mat-button color="warn" (click)="goToMain()">перейти на главную</button>
+        <button mat-button color="primary" (click)="login()" [disabled]="userForm.invalid">Войти</button>
+      </div>
+      <div style="display: flex;justify-content: center; align-items: center">
+        <small>нет учетной записи?</small>
+        <button mat-button color="primary" (click)="goToRegister()">Регистрация</button>
+      </div>
+    </mat-card-actions>
+
+  </mat-card>
+</div>

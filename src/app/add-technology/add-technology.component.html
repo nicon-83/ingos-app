@@ -1,0 +1,40 @@
+<mat-dialog-content>
+  <mat-card>
+    <mat-card-title>Добавить технологию</mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="techForm">
+
+        <mat-form-field>
+          <input matInput placeholder="наименование" formControlName="name" [(ngModel)]="technology.name" required>
+          <mat-error *ngIf="techForm.controls.name.errors">
+            <span
+              *ngIf="techForm.controls.name.errors.minlength">длина поля должна быть не меньше {{techForm.controls.name.errors.minlength.requiredLength}}
+              символов</span>
+            <span *ngIf="techForm.controls.name.errors.required">необходимо заполнить поле</span>
+          </mat-error>
+          <button mat-button *ngIf="technology.name" matSuffix mat-icon-button aria-label="Clear" (click)="technology.name=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <mat-form-field style="display: block;">
+          <input matInput placeholder="описание" formControlName="description" [(ngModel)]="technology.description" required>
+          <mat-error *ngIf="techForm.controls.description.errors">
+            <span
+              *ngIf="techForm.controls.description.errors.minlength">длина поля должна быть не меньше {{techForm.controls.description.errors.minlength.requiredLength}}
+              символов</span>
+            <span *ngIf="techForm.controls.description.errors.required">необходимо заполнить поле</span>
+          </mat-error>
+          <button mat-button *ngIf="technology.description" matSuffix mat-icon-button aria-label="Clear" (click)="technology.description=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+      </form>
+    </mat-card-content>
+  </mat-card>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close color="accent">Отмена</button>
+  <button mat-button [mat-dialog-close]="{technology:technology, error: error}" color="primary" (click)="addTechnology()" [disabled]="techForm.invalid">Сохранить</button>
+</mat-dialog-actions>

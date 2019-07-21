@@ -1,0 +1,31 @@
+<mat-card>
+  <mat-card-header style="margin-bottom: 10px;">
+    <button mat-button color="primary" matTooltip="Добавить технологию" (click)="openAddTechnologyDialog()">Добавить технологию</button>
+    <mat-form-field style="width: 30%;margin-left: 10px">
+      <input matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="dataFilter" placeholder="Поиск (название, описание)">
+      <button mat-button *ngIf="dataFilter" matSuffix mat-icon-button aria-label="Clear" (click)="clearDataFilter()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <span class="spacer"></span>
+    <mat-paginator [pageSizeOptions]="[10,15,20]" showFirstLastButtons></mat-paginator>
+  </mat-card-header>
+  <mat-card-content>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Наименование</th>
+        <td mat-cell *matCellDef="let technology"> {{technology.name}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="description">
+        <th mat-header-cell  style="width: 75%" *matHeaderCellDef>Описание</th>
+        <td mat-cell *matCellDef="let technology"> {{technology.description}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+  </mat-card-content>
+</mat-card>

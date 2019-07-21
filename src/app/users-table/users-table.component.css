@@ -1,0 +1,13 @@
+table {
+  width: 100%
+}
+
+.mat-list .mat-list-item {
+  height: auto;
+  margin: 7px 0;
+}
+
+.technology:hover {
+  cursor: pointer;
+  color: #f44336;
+}

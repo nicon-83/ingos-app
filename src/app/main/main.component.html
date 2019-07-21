@@ -1,0 +1,33 @@
+<mat-toolbar color="primary">
+  Портал оценки компетенций
+  <span class="spacer"></span>
+  <button *ngIf="!user" mat-button (click)="login()">Войти</button>
+  <div *ngIf="user">
+    <span
+      id="user-logo"
+      matTooltip="перейти в профиль пользователя"
+      style="margin-right: 10px;font-size: 0.8rem"
+      (click)="goToUserProfile()"
+    >
+      {{user.full_name}}
+    </span>
+    <button mat-button (click)="logout()">Выйти</button>
+  </div>
+</mat-toolbar>
+
+<div id="progressBar" style="height: 10px;margin-top: 10px;">
+  <mat-progress-bar *ngIf="loading" style="margin: 5px 0" mode="buffer"></mat-progress-bar>
+</div>
+
+<mat-tab-group>
+  <mat-tab label="Сотрудники">
+    <ng-template matTabContent>
+      <app-users-table (Loading)="onLoad($event)" (showSnackBar)="showSnackBar($event)"></app-users-table>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="Технологии" [disabled]="!user">
+    <ng-template matTabContent>
+      <app-technologies (Loading)="onLoad($event)" (showSnackBar)="showSnackBar($event)"></app-technologies>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>

@@ -1,0 +1,31 @@
+<mat-dialog-content>
+  <mat-card>
+    <mat-card-title>Добавить технологию для {{user.full_name}}</mat-card-title>
+    <mat-card-content>
+
+      <mat-form-field *ngIf="technologies.length > 0">
+        <mat-select placeholder="выберите технологию" [(value)]="selectedTechnology">
+          <mat-option *ngFor="let technology of technologies" [value]="technology.id">
+            {{technology.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <span *ngIf="technologies.length === 0">у пользователя нет технологий без оценок</span>
+
+      <mat-form-field *ngIf="technologies.length > 0" style="margin-left: 10px;">
+        <mat-select placeholder="выберите оценку" [(value)]="selectedRating">
+          <mat-option *ngFor="let rating of ratings" [value]="rating">
+            {{rating}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </mat-card-content>
+  </mat-card>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close color="accent">Отмена</button>
+  <!--  <button mat-button [mat-dialog-close]="user" color="primary" (click)="addRating()>Сохранить</button>-->
+  <button mat-button [mat-dialog-close]="user" color="primary" (click)="addRating()" [disabled]="selectedRating === null || selectedTechnology === null ">Сохранить</button>
+</mat-dialog-actions>
