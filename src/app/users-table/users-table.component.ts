@@ -58,15 +58,16 @@ export class UsersTableComponent implements OnInit {
 
   initDataSourceData(data) {
     this.users = data;
-
     // для поиска добавляем поле содержащее строку с технологиями пользователя
     this.users.forEach(user => {
-      let technology_names = '';
-      user.tech.forEach(tech => {
-        const tech_name = tech.name;
-        technology_names += tech_name;
-      });
-      user.technology_names = technology_names;
+      if (user.tech) {
+        let technology_names = '';
+        user.tech.forEach(tech => {
+          const tech_name = tech.name;
+          technology_names += tech_name;
+        });
+        user.technology_names = technology_names;
+      }
     });
     this.dataSource = new MatTableDataSource<User>(this.users);
     this.dataSource.paginator = this.paginator;
@@ -125,5 +126,14 @@ export class UsersTableComponent implements OnInit {
       console.error(error);
       this.showMessage('Произошла ошибка при загрузке списка сотрудников');
     }, () => this.setLoad(false));
+  }
+
+  calcTableHeight() {
+    const pageHeight = document.documentElement.clientHeight;
+    const topToolbarHeight = document.getElementById('topToolbar').clientHeight;
+    const progressBarHeight = document.getElementById('progressBar').clientHeight;
+    const tableToolbarHeight = document.getElementById('table-toolbar').clientHeight;
+    const tableHeight = pageHeight - topToolbarHeight - 48 - progressBarHeight - tableToolbarHeight - 100;
+    return `${tableHeight}px`;
   }
 }

@@ -43,7 +43,7 @@ export class AddUserRatingComponent implements OnInit {
     this.techService.getTechnologies().subscribe(
       (data: Technology[]) => {
         const availableTechnologies = data;
-        const userTechnologies = this.user.tech;
+        const userTechnologies = this.user.tech || [];
         this.technologies = availableTechnologies.filter(avTech => userTechnologies.every(userTech => avTech.id !== userTech.id));
       }, error => console.log(error)
     );

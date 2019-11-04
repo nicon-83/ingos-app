@@ -52,6 +52,7 @@ export class UserProfileComponent implements OnInit {
     this.userService.updateUser(this.user).subscribe((data: any) => {
       localStorage.setItem('user', JSON.stringify(data[0]));
       this.showSnackBar('Профиль пользователя успешно изменен');
+      setTimeout(() => this.router.navigate(['/main']), 2000);
     }, error => {
       console.error(error);
       this.showSnackBar(error.error);

@@ -1,6 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {TechService} from '../tech.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {MatSnackBar} from '@angular/material';
 
 export class Technology {
   name: string;
@@ -24,7 +25,7 @@ export class AddTechnologyComponent implements OnInit {
     description: new FormControl('', [Validators.required, Validators.minLength(10)]),
   });
 
-  constructor(private techService: TechService) {
+  constructor(private techService: TechService, private snackBar: MatSnackBar) {
   }
 
   addTechnology() {
@@ -32,7 +33,14 @@ export class AddTechnologyComponent implements OnInit {
 
     }, error => {
       console.error(error);
-      this.error = error;
+      this.showSnackBar(error.error);
+      // this.error = error;
+    });
+  }
+
+  showSnackBar(message: string) {
+    this.snackBar.open(message, null, {
+      duration: 3000,
     });
   }
 
